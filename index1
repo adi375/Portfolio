@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Shah — Tech & Growth</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #22222e;
+    --accent: #7fffb2;
+    --accent2: #5b8fff;
+    --text: #e8e8f0;
+    --muted: #6a6a80;
+    --tag-bg: rgba(127,255,178,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(14px);
+  }
+
+  .nav-logo {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* BIG BACKGROUND TEXT */
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem;
+    left: -1rem;
+    font-size: clamp(7rem, 18vw, 18rem);
+    font-weight: 800;
+    color: rgba(127,255,178,0.025);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* GLOW BLOB */
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(127,255,178,0.06) 0%, transparent 65%);
+    top: 50%; left: 55%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    background: var(--tag-bg);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .line2 {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(232,232,240,0.3);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(127,255,178,0.2);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 45px rgba(127,255,178,0.35);
+  }
+
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+  .contact-row:hover { border-color: var(--accent); }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-info-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-info-val {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* SKILLS */
+  .skills-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .skill-category {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-category:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  .skill-category::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .skill-category:hover::before { opacity: 1; }
+
+  .skill-cat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-cat-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.75rem;
+    background: var(--tag-bg);
+    border: 1px solid rgba(127,255,178,0.12);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
+
+  .tag.blue {
+    background: rgba(91,143,255,0.07);
+    border-color: rgba(91,143,255,0.15);
+    color: var(--accent2);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+  .project-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .project-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-badge {
+    padding: 0.2rem 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CONTACT SECTION */
+  .contact-section {
+    text-align: center;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 6rem 3rem;
+  }
+
+  .contact-section .section-label { display: block; }
+  .contact-section .section-title { margin-bottom: 1rem; }
+
+  .contact-subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-stats { gap: 2rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-wrapper { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .contact-section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AS/</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">ADITYA</div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for opportunities
+    </div>
+    <h1>
+      Aditya Shah
+      <span class="line2">Tech + Growth.</span>
+    </h1>
+    <p class="hero-desc">
+      Building at the intersection of technology and digital growth. I architect robust technical solutions and craft data-driven marketing strategies that scale.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="#projects" class="btn-outline">View Work</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2x</div>
+        <div class="stat-label">Disciplines</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Mission</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// About</div>
+  <div class="section-title">Tech meets Growth.</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm Aditya Shah — a technical professional and digital marketer passionate about solving real-world problems through code and creative strategy.
+      </p>
+      <p>
+        With hands in both technical development and growth marketing, I bring a rare dual perspective to every project: how to build it right, and how to make it grow.
+      </p>
+      <p>
+        Currently at <strong style="color: var(--text);">GrowthAccel</strong>, driving digital initiatives that blend engineering precision with marketing impact.
+      </p>
+    </div>
+    <div class="about-contact">
+      <div class="contact-row">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-val">aditya.shah@growthaccel.in</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-info-label">Phone</div>
+          <div class="contact-info-val">+91 88569 12399</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-info-label">Location</div>
+          <div class="contact-info-val">India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// Skills</div>
+  <div class="section-title">What I bring to the table.</div>
+  <div class="skills-wrapper">
+    <div class="skill-category">
+      <div class="skill-cat-icon">⚙️</div>
+      <div class="skill-cat-title">Technical</div>
+      <div class="skill-tags">
+        <span class="tag">Web Development</span>
+        <span class="tag">APIs & Integrations</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Data Analysis</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">System Design</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">📈</div>
+      <div class="skill-cat-title">Digital Marketing</div>
+      <div class="skill-tags">
+        <span class="tag blue">SEO / SEM</span>
+        <span class="tag blue">Performance Ads</span>
+        <span class="tag blue">Email Marketing</span>
+        <span class="tag blue">Content Strategy</span>
+        <span class="tag blue">Growth Hacking</span>
+        <span class="tag blue">Analytics</span>
+        <span class="tag blue">Social Media</span>
+        <span class="tag blue">CRO</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">🛠️</div>
+      <div class="skill-cat-title">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">Google Analytics</span>
+        <span class="tag">Meta Ads</span>
+        <span class="tag">HubSpot</span>
+        <span class="tag">Zapier</span>
+        <span class="tag">Git</span>
+        <span class="tag">Notion</span>
+        <span class="tag">Ahrefs</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">💡</div>
+      <div class="skill-cat-title">Core Strengths</div>
+      <div class="skill-tags">
+        <span class="tag blue">Problem Solving</span>
+        <span class="tag blue">Strategic Thinking</span>
+        <span class="tag blue">Cross-functional</span>
+        <span class="tag blue">Data-driven</span>
+        <span class="tag blue">Fast Learner</span>
+        <span class="tag blue">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// Projects</div>
+  <div class="section-title">Selected work.</div>
+  <div class="projects-grid">
+
+    <!-- FEATURED: 100+ Clients -->
+    <div class="project-card featured">
+      <div>
+        <div class="project-type">⭐ Flagship Project</div>
+        <div class="project-title">Complete Digital Setup — 100+ Businesses</div>
+        <p class="project-desc">
+          Worked hands-on with 100+ clients across industries to build their entire digital presence from the ground up. Each engagement covered setting up a professional <strong style="color:var(--text)">Business Portfolio</strong>, achieving <strong style="color:var(--text)">Meta Verification</strong> for brand credibility, and deploying a <strong style="color:var(--text)">WhatsApp Business Chatbot</strong> for 24/7 automated customer engagement — turning raw businesses into conversion-ready digital brands.
+        </p>
+        <div class="project-badge-wrap" style="margin-top:1.25rem;">
+          <span class="project-badge">100+ Clients</span>
+          <span class="project-badge">Business Portfolio Setup</span>
+          <span class="project-badge">Meta Verification</span>
+          <span class="project-badge">WhatsApp Chatbot</span>
+          <span class="project-badge">End-to-End Delivery</span>
+        </div>
+      </div>
+      <div style="font-size:5rem;opacity:0.12;flex-shrink:0;">🏢</div>
+    </div>
+
+    <!-- Business Portfolio Setup -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">🗂️</span>
+        <div class="project-type" style="margin-bottom:0;">Business Portfolio Setup</div>
+      </div>
+      <div class="project-title">Google & Meta Business Profiles</div>
+      <p class="project-desc">Helped 100+ clients establish polished, optimised business profiles on Google Business and Meta — including branding, category setup, service listings, review strategy, and linking across platforms for maximum discoverability.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Google Business</span>
+        <span class="project-badge">Meta Business Suite</span>
+        <span class="project-badge">Local SEO</span>
+        <span class="project-badge">Branding</span>
+      </div>
+    </div>
+
+    <!-- Meta Verification -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">✅</span>
+        <div class="project-type" style="margin-bottom:0;">Meta / Social</div>
+      </div>
+      <div class="project-title">Meta Business Verification</div>
+      <p class="project-desc">Guided businesses through the full Meta verification process — document prep, domain verification, Business Manager setup, and compliance review. Unlocked verified badges, higher ad spend limits, and full WhatsApp API access for clients.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Meta Business Manager</span>
+        <span class="project-badge">Domain Verification</span>
+        <span class="project-badge">Compliance</span>
+        <span class="project-badge">Brand Trust</span>
+      </div>
+    </div>
+
+    <!-- WhatsApp Chatbot -->
+    <div class="project-card" style="grid-column: span 2;">
+      <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;">
+        <div>
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+            <span style="font-size:1.6rem;">💬</span>
+            <div class="project-type" style="margin-bottom:0;">Automation / Tech</div>
+          </div>
+          <div class="project-title">WhatsApp Business Chatbot Deployments</div>
+          <p class="project-desc">Built and deployed WhatsApp API-powered chatbots for client businesses — automating lead qualification, instant FAQ responses, appointment booking, and order/inquiry tracking. Gave businesses 24/7 customer engagement without adding headcount, dramatically improving response times and customer satisfaction.</p>
+          <div class="project-badge-wrap" style="margin-top:1rem;">
+            <span class="project-badge">WhatsApp Business API</span>
+            <span class="project-badge">Chatbot Flows</span>
+            <span class="project-badge">Lead Qualification</span>
+            <span class="project-badge">Automation</span>
+            <span class="project-badge">24/7 Engagement</span>
+          </div>
+        </div>
+        <div style="font-size:4rem;opacity:0.1;flex-shrink:0;">🤖</div>
+      </div>
+    </div>
+
+    <!-- Growth Automation -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">⚙️</span>
+        <div class="project-type" style="margin-bottom:0;">Technical</div>
+      </div>
+      <div class="project-title">Growth Automation Pipeline</div>
+      <p class="project-desc">End-to-end marketing automation connecting lead capture, CRM, email sequences, and performance dashboards — cutting manual effort by 70% and response time from hours to minutes.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Python</span>
+        <span class="project-badge">HubSpot API</span>
+        <span class="project-badge">Email Automation</span>
+      </div>
+    </div>
+
+    <!-- Paid Ads -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">📈</span>
+        <div class="project-type" style="margin-bottom:0;">Digital Marketing</div>
+      </div>
+      <div class="project-title">Paid Ads Optimization</div>
+      <p class="project-desc">Restructured Meta & Google ad campaigns with audience segmentation and A/B testing — achieving a 40% improvement in ROAS over 3 months across multiple client accounts.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Meta Ads</span>
+        <span class="project-badge">Google Ads</span>
+        <span class="project-badge">A/B Testing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-label">// Let's Connect</div>
+  <div class="section-title">Ready to build something?</div>
+  <p class="contact-subtitle">Whether it's a technical challenge or a growth opportunity — let's talk.</p>
+  <div class="contact-links">
+    <a href="mailto:aditya.shah@growthaccel.in" class="btn-primary">aditya.shah@growthaccel.in</a>
+    <a href="tel:+918856912399" class="btn-outline">+91 88569 12399</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Aditya Shah &nbsp;·&nbsp; Built with intent.
+</footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aditya Shah — Tech & Growth</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --card: #16161f;
+    --border: #22222e;
+    --accent: #7fffb2;
+    --accent2: #5b8fff;
+    --text: #e8e8f0;
+    --muted: #6a6a80;
+    --tag-bg: rgba(127,255,178,0.07);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(14px);
+  }
+
+  .nav-logo {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--accent);
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* BIG BACKGROUND TEXT */
+  .hero-bg-text {
+    position: absolute;
+    bottom: -2rem;
+    left: -1rem;
+    font-size: clamp(7rem, 18vw, 18rem);
+    font-weight: 800;
+    color: rgba(127,255,178,0.025);
+    letter-spacing: -0.05em;
+    pointer-events: none;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* GLOW BLOB */
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(127,255,178,0.06) 0%, transparent 65%);
+    top: 50%; left: 55%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 900px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    background: var(--tag-bg);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .line2 {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(232,232,240,0.3);
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    font-weight: 400;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    padding: 0.85rem 2rem;
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(127,255,178,0.2);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 45px rgba(127,255,178,0.35);
+  }
+
+  .btn-outline {
+    padding: 0.85rem 2rem;
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-family: 'Syne', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat-num {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-top: 0.3rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1.05rem;
+    margin-bottom: 1rem;
+  }
+
+  .about-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.2s;
+  }
+  .contact-row:hover { border-color: var(--accent); }
+
+  .contact-icon {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--tag-bg);
+    border-radius: 6px;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-info-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .contact-info-val {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  /* SKILLS */
+  .skills-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .skill-category {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .skill-category:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+  .skill-category::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .skill-category:hover::before { opacity: 1; }
+
+  .skill-cat-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skill-cat-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text);
+  }
+
+  .skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    padding: 0.3rem 0.75rem;
+    background: var(--tag-bg);
+    border: 1px solid rgba(127,255,178,0.12);
+    border-radius: 100px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+  }
+
+  .tag.blue {
+    background: rgba(91,143,255,0.07);
+    border-color: rgba(91,143,255,0.15);
+    color: var(--accent2);
+  }
+
+  /* PROJECTS */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.25s, transform 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+  .project-card.featured {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .project-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .project-desc {
+    font-size: 0.9rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-badge-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .project-badge {
+    padding: 0.2rem 0.6rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CONTACT SECTION */
+  .contact-section {
+    text-align: center;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 6rem 3rem;
+  }
+
+  .contact-section .section-label { display: block; }
+  .contact-section .section-title { margin-bottom: 1rem; }
+
+  .contact-subtitle {
+    color: var(--muted);
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 2rem 3rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-stats { gap: 2rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .skills-wrapper { grid-template-columns: 1fr; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .contact-section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AS/</div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-bg-text">ADITYA</div>
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Available for opportunities
+    </div>
+    <h1>
+      Aditya Shah
+      <span class="line2">Tech + Growth.</span>
+    </h1>
+    <p class="hero-desc">
+      Building at the intersection of technology and digital growth. I architect robust technical solutions and craft data-driven marketing strategies that scale.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="#projects" class="btn-outline">View Work</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">2x</div>
+        <div class="stat-label">Disciplines</div>
+      </div>
+      <div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ideas</div>
+      </div>
+      <div>
+        <div class="stat-num">1</div>
+        <div class="stat-label">Mission</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">// About</div>
+  <div class="section-title">Tech meets Growth.</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm Aditya Shah — a technical professional and digital marketer passionate about solving real-world problems through code and creative strategy.
+      </p>
+      <p>
+        With hands in both technical development and growth marketing, I bring a rare dual perspective to every project: how to build it right, and how to make it grow.
+      </p>
+      <p>
+        Currently at <strong style="color: var(--text);">GrowthAccel</strong>, driving digital initiatives that blend engineering precision with marketing impact.
+      </p>
+    </div>
+    <div class="about-contact">
+      <div class="contact-row">
+        <div class="contact-icon">📧</div>
+        <div>
+          <div class="contact-info-label">Email</div>
+          <div class="contact-info-val">aditya.shah@growthaccel.in</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📱</div>
+        <div>
+          <div class="contact-info-label">Phone</div>
+          <div class="contact-info-val">+91 88569 12399</div>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-info-label">Location</div>
+          <div class="contact-info-val">India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">// Skills</div>
+  <div class="section-title">What I bring to the table.</div>
+  <div class="skills-wrapper">
+    <div class="skill-category">
+      <div class="skill-cat-icon">⚙️</div>
+      <div class="skill-cat-title">Technical</div>
+      <div class="skill-tags">
+        <span class="tag">Web Development</span>
+        <span class="tag">APIs & Integrations</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Data Analysis</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">System Design</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">📈</div>
+      <div class="skill-cat-title">Digital Marketing</div>
+      <div class="skill-tags">
+        <span class="tag blue">SEO / SEM</span>
+        <span class="tag blue">Performance Ads</span>
+        <span class="tag blue">Email Marketing</span>
+        <span class="tag blue">Content Strategy</span>
+        <span class="tag blue">Growth Hacking</span>
+        <span class="tag blue">Analytics</span>
+        <span class="tag blue">Social Media</span>
+        <span class="tag blue">CRO</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">🛠️</div>
+      <div class="skill-cat-title">Tools & Platforms</div>
+      <div class="skill-tags">
+        <span class="tag">Google Analytics</span>
+        <span class="tag">Meta Ads</span>
+        <span class="tag">HubSpot</span>
+        <span class="tag">Zapier</span>
+        <span class="tag">Git</span>
+        <span class="tag">Notion</span>
+        <span class="tag">Ahrefs</span>
+      </div>
+    </div>
+    <div class="skill-category">
+      <div class="skill-cat-icon">💡</div>
+      <div class="skill-cat-title">Core Strengths</div>
+      <div class="skill-tags">
+        <span class="tag blue">Problem Solving</span>
+        <span class="tag blue">Strategic Thinking</span>
+        <span class="tag blue">Cross-functional</span>
+        <span class="tag blue">Data-driven</span>
+        <span class="tag blue">Fast Learner</span>
+        <span class="tag blue">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">// Projects</div>
+  <div class="section-title">Selected work.</div>
+  <div class="projects-grid">
+
+    <!-- FEATURED: 100+ Clients -->
+    <div class="project-card featured">
+      <div>
+        <div class="project-type">⭐ Flagship Project</div>
+        <div class="project-title">Complete Digital Setup — 100+ Businesses</div>
+        <p class="project-desc">
+          Worked hands-on with 100+ clients across industries to build their entire digital presence from the ground up. Each engagement covered setting up a professional <strong style="color:var(--text)">Business Portfolio</strong>, achieving <strong style="color:var(--text)">Meta Verification</strong> for brand credibility, and deploying a <strong style="color:var(--text)">WhatsApp Business Chatbot</strong> for 24/7 automated customer engagement — turning raw businesses into conversion-ready digital brands.
+        </p>
+        <div class="project-badge-wrap" style="margin-top:1.25rem;">
+          <span class="project-badge">100+ Clients</span>
+          <span class="project-badge">Business Portfolio Setup</span>
+          <span class="project-badge">Meta Verification</span>
+          <span class="project-badge">WhatsApp Chatbot</span>
+          <span class="project-badge">End-to-End Delivery</span>
+        </div>
+      </div>
+      <div style="font-size:5rem;opacity:0.12;flex-shrink:0;">🏢</div>
+    </div>
+
+    <!-- Business Portfolio Setup -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">🗂️</span>
+        <div class="project-type" style="margin-bottom:0;">Business Portfolio Setup</div>
+      </div>
+      <div class="project-title">Google & Meta Business Profiles</div>
+      <p class="project-desc">Helped 100+ clients establish polished, optimised business profiles on Google Business and Meta — including branding, category setup, service listings, review strategy, and linking across platforms for maximum discoverability.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Google Business</span>
+        <span class="project-badge">Meta Business Suite</span>
+        <span class="project-badge">Local SEO</span>
+        <span class="project-badge">Branding</span>
+      </div>
+    </div>
+
+    <!-- Meta Verification -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">✅</span>
+        <div class="project-type" style="margin-bottom:0;">Meta / Social</div>
+      </div>
+      <div class="project-title">Meta Business Verification</div>
+      <p class="project-desc">Guided businesses through the full Meta verification process — document prep, domain verification, Business Manager setup, and compliance review. Unlocked verified badges, higher ad spend limits, and full WhatsApp API access for clients.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Meta Business Manager</span>
+        <span class="project-badge">Domain Verification</span>
+        <span class="project-badge">Compliance</span>
+        <span class="project-badge">Brand Trust</span>
+      </div>
+    </div>
+
+    <!-- WhatsApp Chatbot -->
+    <div class="project-card" style="grid-column: span 2;">
+      <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:2rem;">
+        <div>
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+            <span style="font-size:1.6rem;">💬</span>
+            <div class="project-type" style="margin-bottom:0;">Automation / Tech</div>
+          </div>
+          <div class="project-title">WhatsApp Business Chatbot Deployments</div>
+          <p class="project-desc">Built and deployed WhatsApp API-powered chatbots for client businesses — automating lead qualification, instant FAQ responses, appointment booking, and order/inquiry tracking. Gave businesses 24/7 customer engagement without adding headcount, dramatically improving response times and customer satisfaction.</p>
+          <div class="project-badge-wrap" style="margin-top:1rem;">
+            <span class="project-badge">WhatsApp Business API</span>
+            <span class="project-badge">Chatbot Flows</span>
+            <span class="project-badge">Lead Qualification</span>
+            <span class="project-badge">Automation</span>
+            <span class="project-badge">24/7 Engagement</span>
+          </div>
+        </div>
+        <div style="font-size:4rem;opacity:0.1;flex-shrink:0;">🤖</div>
+      </div>
+    </div>
+
+    <!-- Growth Automation -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">⚙️</span>
+        <div class="project-type" style="margin-bottom:0;">Technical</div>
+      </div>
+      <div class="project-title">Growth Automation Pipeline</div>
+      <p class="project-desc">End-to-end marketing automation connecting lead capture, CRM, email sequences, and performance dashboards — cutting manual effort by 70% and response time from hours to minutes.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Python</span>
+        <span class="project-badge">HubSpot API</span>
+        <span class="project-badge">Email Automation</span>
+      </div>
+    </div>
+
+    <!-- Paid Ads -->
+    <div class="project-card">
+      <div class="project-card-top" style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;">
+        <span style="font-size:1.6rem;">📈</span>
+        <div class="project-type" style="margin-bottom:0;">Digital Marketing</div>
+      </div>
+      <div class="project-title">Paid Ads Optimization</div>
+      <p class="project-desc">Restructured Meta & Google ad campaigns with audience segmentation and A/B testing — achieving a 40% improvement in ROAS over 3 months across multiple client accounts.</p>
+      <div class="project-badge-wrap">
+        <span class="project-badge">Meta Ads</span>
+        <span class="project-badge">Google Ads</span>
+        <span class="project-badge">A/B Testing</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-label">// Let's Connect</div>
+  <div class="section-title">Ready to build something?</div>
+  <p class="contact-subtitle">Whether it's a technical challenge or a growth opportunity — let's talk.</p>
+  <div class="contact-links">
+    <a href="mailto:aditya.shah@growthaccel.in" class="btn-primary">aditya.shah@growthaccel.in</a>
+    <a href="tel:+918856912399" class="btn-outline">+91 88569 12399</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 Aditya Shah &nbsp;·&nbsp; Built with intent.
+</footer>
+
+</body>
+</html>
